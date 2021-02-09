@@ -3,12 +3,7 @@
 
 ## Tutorials and Examples
 
-[API documentation]()
 
-[Walkthrough example]()
 
 ## System Documentation
 
-[System architecture]()
-
-[Server connections]()
