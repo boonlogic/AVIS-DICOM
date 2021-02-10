@@ -1,4 +1,4 @@
-![Boon Logic](images/BoonLogic.png)
+![Boon Logic](../images/BoonLogic.png)
 # API Documentation
 
 This REST API serves as an interface into the BoonLogic AVIS-DICOM server for processing test mammography images.
