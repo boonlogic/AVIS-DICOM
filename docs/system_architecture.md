@@ -50,3 +50,57 @@ See the [Server Connections Document](./server_connections.md) for more informat
 
 
 ## REST API
+
+REST interface for accessing the server and its processed results.
+
+<img src="../images/pipeline-API.png" alt="Labview SDK" width="400">
+<br/>
+<br/>
+
+# **TODO** Fill in details of what everything means
+
+### General
+| Status | Version |
+| :--- | :--- |
+| Timestamp of the call to determine if server is active | Version numbers for all included software |
+
+**Included Software:**
+* avis-dicom-api
+* avis-dicom-common
+* builder
+* expert-common
+* nano-py-bindings
+* nano-secure
+
+### Test Bench
+| Attach<br/><span style="font-weight:normal">*(Required)*</span> | Detach | Status |
+| :--- | :--- | :--- |
+| Assign identifier | Remove identifier from the list of valid test benches | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
+
+### Parameters
+| Define | Returned |
+| :--- | :--- |
+| Set values and forego autotuning for any set values | Complete list of parameters used in processing of the image (including auto-set values)
+
+##### subcell
+###### width (configurable)
+###### shift (set)
+##### preprocess
+###### filter (configurable)
+###### parameter (configurable)
+##### edge (configurable)
+##### thresholds
+###### contrast (configurable)
+###### variation (set)
+###### distance (set)
+###### local z value (set)
+##### histogram maximum (set)
+
+### Image
+
+### Results
+
+### Summary
+
+
+See the [API Documentation](./api_docs.md) for more information.
