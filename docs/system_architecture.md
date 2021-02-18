@@ -10,7 +10,7 @@ This server is made to process DICOM test images and return major and minor defe
 
 Located on the test bench controller, this interfaces with the AVIS server over the internal network.  
 
-<img src="../images/pipeline-labview.png" alt="Labview SDK" width="200">  
+<img src="../images/pipeline-labview.png" alt="Labview SDK" width="400">  
 
 <br/>
 <br/>
@@ -23,7 +23,7 @@ Located on the test bench controller, this interfaces with the AVIS server over 
 
 On-prem 1U mountable rack to be delivered on site.
 
-<img src="../images/pipeline-hardware.png" alt="Labview SDK" width="200">
+<img src="../images/pipeline-hardware.png" alt="Labview SDK" width="400">
 <br/>
 <br/>
 
