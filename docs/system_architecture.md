@@ -57,12 +57,10 @@ REST interface for accessing the server and its processed results.
 <br/>
 <br/>
 
-# **TODO** Fill in details of what everything means
-
 ### General
-| Status | Version |
+| Status | <span style="font-weight:normal">Timestamp of the call to determine if server is active</span>  |
 | :--- | :--- |
-| Timestamp of the call to determine if server is active | Version numbers for all included software |
+| **Version** | Version numbers for all included software |
 
 **Included Software:**
 * avis-dicom-api
@@ -73,34 +71,94 @@ REST interface for accessing the server and its processed results.
 * nano-secure
 
 ### Test Bench
-| Attach<br/><span style="font-weight:normal">*(Required)*</span> | Detach | Status |
-| :--- | :--- | :--- |
-| Assign identifier | Remove identifier from the list of valid test benches | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
+| Attach<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Assign identifier</span> |
+| :--- | :--- |
+| **Detach** | Remove identifier from the list of valid test benches |
+| **Status** | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
 
 ### Parameters
-| Define | Returned |
+| Define | <span style="font-weight:normal">Set values and forego autotuning for any set values</span> |
 | :--- | :--- |
-| Set values and forego autotuning for any set values | Complete list of parameters used in processing of the image (including auto-set values)
+| **Returned** | Complete list of parameters used in processing of the image (including auto-set values)
 
 ##### subcell
-###### width (configurable)
-###### shift (set)
+###### width (configurable) - number of pixels across for the subimage
+###### shift (set) - number of pixels to shift over between each subimage
 ##### preprocess
-###### filter (configurable)
-###### parameter (configurable)
-##### edge (configurable)
+###### filter (configurable) - filter to preprocess the whole image. Options are median, gaussian, or none
+###### parameter (configurable) - parameter associated with the filter. If the filter is median, this value corresponds to the window width, if the filter is gaussian, then this corresponds to the sigma value
+##### edge (configurable) - number of pixels to trim around the edge of the image
 ##### thresholds
-###### contrast (configurable)
-###### variation (set)
-###### distance (set)
-###### local z value (set)
-##### histogram maximum (set)
+###### contrast (configurable) - defect contrast threshold for determining whether the candidate is minor or major
+###### variation (set) - the distance measurement to distinguish variation between subimages (Boon value)
+###### distance (set) - distance index between subimages' clusters (Boon value)
+###### local z value (set) - statistical normality value measuring the variation of pixel values within the subimage (Boon value)
+##### histogram maximum (set) - value for cropping histogram of magnitude values for each subimage
 
 ### Image
+| Send<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Send DICOM image to AVIS server to be processed</span> |
+| :--- | :--- |
 
 ### Results
+| Returned<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Summary of defect values resulting from the last image processed</span> |
+| :--- | :--- |
+
+##### image - identifier associated with the last image processed
+##### major - number of major candidates found
+##### minor - number of minor candidates found
+##### coordinates
+###### major - list of coordinates where each major defect candidate was located on the original image
 
 ### Summary
+| Returned<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Send DICOM image to AVIS server to be processed</span> |
+| :--- | :--- |
 
+**Example summary**  
+<br>
+<img src="../images/summary.png" alt="Labview SDK" width="400">
 
 See the [API Documentation](./api_docs.md) for more information.
+
+
+## Image Process
+
+General pipeline happening on the backend when each DICOM image is pushed to the AVIS server.
+
+<img src="../images/pipeline-process.png" alt="Labview SDK" width="400">
+<br/>
+<br/>
+
+#### Step 1: Crop SF images
+Using the image name identifier, the right edge is clipped if the DICOM image name contains the filter identifier "SF". If the filter is LF, this step is skipped.
+#### Step 2: Filter image
+Using the specified filter type in the configuration (gaussian, median, or none), the image is passed through the filter. The filtered image is now the image used in the rest of the processing pipeline.
+#### Step 3: Subdivide image
+Using the subcell width from the configuration (in number of pixels), the DICOM image is subdivided into smaller images. The number of pixels between each subimage is the subcell shift value in the configuration.<br>
+<img src="../images/subimage.png" alt="Labview SDK" width="200">  
+Subimages are shown in yellow. This simplified example is for a width of 3 and a shift of 2.
+#### Step 4: Convert subimages to histograms of magnitudes
+Each subimage is converted to a histogram of magnitudes using the raw pixel values. Pixel values are binned so that the histogram is has 64 bins of pixels. These histograms are what are used to create the model for each image and find any defects.
+
+## Clustering Process
+
+Boon Logic clustering process of the DICOM image.
+
+<img src="../images/pipeline-clustering.png" alt="Labview SDK" width="400">
+<br/>
+<br/>
+
+The histograms for the image are clustered using Boon Logic's nano clustering technique. From the raw image, shown on the right, the resulting clusters are assigned frequency values where high values are associated with areas of the image that are different from the rest of the image regions. The image shown on the right is a contour plot of an example DICOM image's results with areas in white depicting parts of the image that are potential defects.  
+<img src="../images/raw-image.png" alt="Labview SDK" width="200">
+<img src="../images/RI-contours.png" alt="Labview SDK" width="250">  
+
+Note that areas along the edge of the image are white where the original image has a natural gradient. This will be taken into account and ignored in the classification step if those areas are indeed just gradients.
+
+## Classification Process
+
+Process for classifying the candidates as major or minor defects.
+
+<img src="../images/pipeline-classification.png" alt="Labview SDK" width="400">
+<br/>
+<br/>
+
+### Factors 
