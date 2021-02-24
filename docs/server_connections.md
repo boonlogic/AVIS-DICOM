@@ -4,8 +4,9 @@
 <img src="../images/server-connection-urs.png" alt="URS diagram" width="400">
 <br/>
 
-| Product | <span style="font-weight:normal">AVIS Appliance</span> |
+| Hardware Specifications |  |  
 | :--- | :--- |
+| **Product** | AVIS Appliance |
 | **Form Factor** | 1U server <br> CE Marking |
 | **Processor** | Intel Xeon E-2288G |
 | **# of Cores** | 8 |

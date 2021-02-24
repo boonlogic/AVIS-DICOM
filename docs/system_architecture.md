@@ -57,9 +57,9 @@ REST interface for accessing the server and its processed results.
 <br/>
 <br/>
 
-### General
-| Status | <span style="font-weight:normal">Timestamp of the call to determine if server is active</span>  |
+| General |  |
 | :--- | :--- |
+| **Status** | Timestamp of the call to determine if server is active  |
 | **Version** | Version numbers for all included software |
 
 **Included Software:**
@@ -70,15 +70,15 @@ REST interface for accessing the server and its processed results.
 * nano-py-bindings
 * nano-secure
 
-### Test Bench
-| Attach<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Assign identifier</span> |
+| Test Bench | |
 | :--- | :--- |
+| **Attach**<br/>*(Required)* | Assign identifier |
 | **Detach** | Remove identifier from the list of valid test benches |
 | **Status** | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
 
-### Parameters
-| Define | <span style="font-weight:normal">Set values and forego autotuning for any set values</span> |
+| Parameters |  |
 | :--- | :--- |
+| **Define** | Set values and forego autotuning for any set values |
 | **Returned** | Complete list of parameters used in processing of the image (including auto-set values)
 
 ##### subcell
@@ -95,13 +95,14 @@ REST interface for accessing the server and its processed results.
 ###### local z value (set) - statistical normality value measuring the variation of pixel values within the subimage (Boon value)
 ##### histogram maximum (set) - value for cropping histogram of magnitude values for each subimage
 
-### Image
-| Send<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Send DICOM image to AVIS server to be processed</span> |
+| Image |  |
 | :--- | :--- |
+| **Send**<br/>*(Required)* | Send DICOM image to AVIS server to be processed |
 
-### Results
-| Returned<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Summary of defect values resulting from the last image processed</span> |
+
+| Results |  |
 | :--- | :--- |
+| **Returned**<br/>*(Required)* | Summary of defect values resulting from the last image processed |
 
 ##### image - identifier associated with the last image processed
 ##### major - number of major candidates found
@@ -109,9 +110,9 @@ REST interface for accessing the server and its processed results.
 ##### coordinates
 ###### major - list of coordinates where each major defect candidate was located on the original image
 
-### Summary
-| Returned<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Send DICOM image to AVIS server to be processed</span> |
+| Summary |  |
 | :--- | :--- |
+| **Returned**<br/>*(Required)* | Send DICOM image to AVIS server to be processed |
 
 **Example summary file**  
 <br>
