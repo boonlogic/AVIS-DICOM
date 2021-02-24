@@ -113,7 +113,7 @@ REST interface for accessing the server and its processed results.
 | Returned<br/><span style="font-weight:normal">*(Required)*</span> | <span style="font-weight:normal">Send DICOM image to AVIS server to be processed</span> |
 | :--- | :--- |
 
-**Example summary**  
+**Example summary file**  
 <br>
 <img src="../images/summary.png" alt="Labview SDK" width="400">
 
@@ -161,4 +161,36 @@ Process for classifying the candidates as major or minor defects.
 <br/>
 <br/>
 
-### Factors 
+### Factors
+#### Contrast
+1. Fits each candidate subimage to a plane  
+2. Find the difference between the min pixel value and the expected plane value (as well as the difference between the max and the plane)
+3. Difference value divided by the expected plane value gives the contrast measurement
+4. Contrast value is compared to the threshold value (defaulted to 0.02)
+
+#### Distance
+1. Cluster distance from other clusters created throughout the image
+2. 95th percentile of all distance indexes within the image is the threshold
+3. Compare candidate distance index against threshold
+
+#### Local Z value
+1. Finds the overall mean and standard deviation of the image's pixel values.
+2. Find the candidates' z value for the min (and max) local pixel value
+3. Compare z values against the average z value throughout the whole image
+
+### Major candidates - values fall above ALL thresholds
+### Minor candidates - values fall above SOME thresholds
+
+# Deliverables
+
+### * 1U rack-mountable server
+### * Results values
+- Major candidate count
+- Minor candidate count
+- Coordinates of major candidates
+- Summary image of the locations of the candidates and the window level/window width used for displaying the image
+
+# AVIS Enabled Process
+<img src="../images/avis-enabled-process.png" alt="Labview SDK" width="900">
+<br/>
+<br/>
