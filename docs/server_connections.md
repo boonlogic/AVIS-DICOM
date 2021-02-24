@@ -16,3 +16,17 @@
 | **Power Supply** | Dual Redundant 550W |
 | **Mounting** | Sliding Rails |
 | **Operating System** | Ubuntu 18.04.5 |
+
+
+### Network Connections
+#### OT Network &#8594; iDRAC Port
+#### IT Network &#8594; DHCP specified IP address
+
+### Features
+#### * Up to 10 simultaneous image analysis
+#### * REST API server connection
+#### * Token authentication
+#### * RSA authentication for ssh access
+#### * iDRAC server monitoring
+#### * Boon OTA software update
+#### * Simple disaster recovery
