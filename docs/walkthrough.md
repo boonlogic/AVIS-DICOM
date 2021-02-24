@@ -149,7 +149,7 @@ Returns:
 ```
 
 ### Step 6: Configure Parameters
-See the [parameters explanation section](./system_architecture.md#parameters) for more information
+See the [parameters explanation section](./system_architecture.md#subcell) for more information
 ```curl
 curl -X POST http://10.0.1.41:8080/avis-dicom/v1/testBench/test123 \
   -H "x-token: test"

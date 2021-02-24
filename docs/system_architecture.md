@@ -77,7 +77,7 @@ REST interface for accessing the server and its processed results.
 | **Status** | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
 
 
-| <p id="parameters">**Parameters**</p> |  |
+| Parameters |  |
 | :--- | :--- |
 | **Define** | Set values and forego autotuning for any set values |
 | **Returned** | Complete list of parameters used in processing of the image (including auto-set values)
