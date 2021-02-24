@@ -2,9 +2,9 @@
 
 # Walkthroughs
 
-[* Check Connection](#example-check-connection)  
-[* Quick Start](#example-quick-start)  
-[* Complete Guide](#example-complete-guide)  
+[* Check Connection](#example-1-check-connection)  
+[* Quick Start](#example-2-quick-start)  
+[* Complete Guide](#example-3-complete-guide)  
 
 ## Example 1 - Check Connection
 Simple curl command to return the current timestamp. Returns the timestamp as a string if server is running (and 200 return code) and fails if server is offline.
