@@ -1,4 +1,4 @@
-![Boon Logic](../images/BoonLogic.png)
+[![Boon Logic](../images/BoonLogic.png)](docs.boonlogic.com)
 
 # System Architecture
 
