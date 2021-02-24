@@ -76,6 +76,7 @@ REST interface for accessing the server and its processed results.
 | **Detach** | Remove identifier from the list of valid test benches |
 | **Status** | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
 
+
 | Parameters |  |
 | :--- | :--- |
 | **Define** | Set values and forego autotuning for any set values |
