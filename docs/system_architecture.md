@@ -161,6 +161,9 @@ Process for classifying the candidates as major or minor defects.
 <br/>
 <br/>
 
+### Major candidates - values fall above ALL thresholds
+### Minor candidates - values fall above SOME thresholds
+
 ### Factors
 #### Contrast
 1. Fits each candidate subimage to a plane  
@@ -178,12 +181,9 @@ Process for classifying the candidates as major or minor defects.
 2. Find the candidates' z value for the min (and max) local pixel value
 3. Compare z values against the average z value throughout the whole image
 
-### Major candidates - values fall above ALL thresholds
-### Minor candidates - values fall above SOME thresholds
-
 # Deliverables
 
-### * 1U rack-mountable server
+### * 1U rack-mountable server (see [AVIS DICOM Server](#avis-ai-server) section)
 ### * Results values
 - Major candidate count
 - Minor candidate count
