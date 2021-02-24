@@ -46,7 +46,7 @@ On-prem 1U mountable rack to be delivered on site.
 * Simple Disaster Recovery
 
 
-See the [Server Connections Document](./server_connections.md) for more information.
+### See the [Server Connections Document](./server_connections.md) for more information.
 
 
 ## REST API
@@ -117,7 +117,7 @@ REST interface for accessing the server and its processed results.
 <br>
 <img src="../images/summary.png" alt="Labview SDK" width="400">
 
-See the [API Documentation](./api_docs.md) for more information.
+### See the [API Documentation](./api_docs.md) for more information.
 
 
 ## Image Process
