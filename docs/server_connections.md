@@ -1,4 +1,4 @@
-[![Boon Logic](../images/BoonLogic.png)](docs.boonlogic.com)
+[![Boon Logic](../images/BoonLogic.png)](http://docs.boonlogic.com)
 
 # Server Connections and Specifications
 <img src="../images/server-connection-urs.png" alt="URS diagram" width="400">

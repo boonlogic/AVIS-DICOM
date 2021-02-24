@@ -1,4 +1,4 @@
-[![Boon Logic](../images/BoonLogic.png)](docs.boonlogic.com)
+[![Boon Logic](../images/BoonLogic.png)](http://docs.boonlogic.com)
 
 # API Documentation
 
