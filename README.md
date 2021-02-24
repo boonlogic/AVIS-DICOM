@@ -5,6 +5,8 @@
 
 [API Documentation](docs/api_docs.md)
 
+[Curl Walkthroughs](docs/walkthrough.md)
+
 ## System Documentation
 
 [System Architecture](docs/system_architecture.md)
