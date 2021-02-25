@@ -34,7 +34,7 @@ Returns:
 ```
 
 ### Step 2: Push DICOM image through pipeline
-Use any DICOM image or this [example image](../images/BAD_FilterRhAg_SF.DCM)
+Use any DICOM image or this [example image](../files/BAD_FilterRhAg_SF.DCM)
 ```curl
 curl -X POST http://10.0.1.41:8080/avis-dicom/v1/rawImage/test123?filetype=dcm \
   -H "x-token: test" \
@@ -198,7 +198,7 @@ Returns:
 ```
 
 ### Step 6: Process DICOM Image
-Use any DICOM image or this [example image](../images/BAD_FilterRhAg_SF.DCM)
+Use any DICOM image or this [example image](../files/BAD_FilterRhAg_SF.DCM)
 ```curl
 curl -X POST http://10.0.1.41:8080/avis-dicom/v1/rawImage/test123 \
     ?filetype=dcm \
