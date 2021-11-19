@@ -1,7 +1,7 @@
 ![Boon Logic](images/BoonLogic.png)
 # AVIS-DICOM Documentation
 
-## [Installation and Connection](docs/install_connections.md)
+[Installation and Connection](docs/install_connections.md)
 
 ## Tutorials and Examples
 
