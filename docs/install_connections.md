@@ -3,7 +3,9 @@
 
 # Installation/Update Instructions:
 
-1. Download the release tgz file and install_update.sh file onto server
+1. Download the release tgz file
+2. Download the install_updates.sh file available for download [here](../files/install_update.sh)
+3. Moves files onto the server
 2. Run the following command from the download location to update:
 ```
 ./install_update.sh avis-dicom-server-linux-x86_64-rel-<tag>.tgz
