@@ -4,7 +4,7 @@
 # Installation/Update Instructions:
 
 1. Download the release tgz file
-2. Download the install_updates.sh file available for download [here](./install_update.sh)
+2. Download the install_updates.sh file, available for download [here](../files/install_update.sh)
 3. Moves files onto the server
 2. Run the following command from the download location to update:
 ```
