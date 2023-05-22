@@ -213,6 +213,7 @@ contrastMax: (integer) candidate contrast maximum to use Rose model. Contrasts a
 
 >**Response** <br>
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
@@ -278,6 +279,7 @@ identifier: (string) label for the test bench
 
 >**Response** <br>
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
@@ -336,6 +338,7 @@ upfile: (data) image to process
 
 >**Response** <br>
 JSON block containing the return code and a brief message about the success of the call
+
 ```json
 {
   "code": 200,
@@ -373,6 +376,7 @@ identifier: (string) label for the test bench
 
 >**Response** <br>
 JSON block containing the list of coordinates for the major defects as well as the number of minor and major defects found
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
