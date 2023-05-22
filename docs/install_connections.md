@@ -26,13 +26,14 @@ curl -X GET http://ip.address:8080/avis-dicom/v1/version
 
 ```curl
 {
-  "release": "",
-  "avis-dicom-common": "",
-  "avis-dicom-api": "",
-  "builder": "",
-  "expert-common": "",
-  "nano-py-bindings": "",
-  "nano-secure"
+  "avis-dicom-api": "23464844",
+  "avis-dicom-common": "5e8dc6ab",
+  "builder": "365b8f9b",
+  "expert-common": "623013a5",
+  "nano-py-bindings": "737051d3",
+  "nano-secure": "01db820e",
+  "nano-sgx": "e7172595",
+  "release": "v2.4.1"
 }
 ```
 
