@@ -180,38 +180,68 @@ Sets various parameters for processing the images.
 
 
 >**Request** <br>
-subcell: (integer) number of pixels wide for each sub-image processed <br>
+kernelSize: (integer) number of pixels wide for each sub-image processed (default: 75) <br>
 <br>
-edge: (integer) number of pixels to clip along the edge of the image to remove slight misalignment <br>
+filterType: (string) filter for overall image: gaussian, median, none (default: none) <br>
 <br>
-contrast: (decimal) value for thresholding the defects into major and minor categories <br>
+filterParam: (decimal) sigma or radius value corresponding with the filter (default: 1) <br>
 <br>
-filtertype: (string) filter type to preprocess image. Can be gaussian or median or none <br>
+candidateSize: (integer) number of pixels wide to display for each sub-image processed (default: kernelSize) <br>
 <br>
-parameter: (integer) value associated with the filter type. For a median filter, this is the number of values to smooth across and for gaussian, this is the sigma value
-
+major: (decimal) Rose model threshold for major candidates (default: 0.9) <br>
+<br>
+minor: (decimal) Rose model threshold for minor candidates (default: 0.5) <br>
+<br>
+edgeCrop: (integer) number of pixels to trim along the edge (default: 3) <br>
+<br>
+sfEdge: (integer) pixel width to trim for SF images (trims off right side of image) (default: 1290) <br>
+<br>
+a0SF: (decimal) candidate area minimum asymptote for SF images (default: 11) <br>
+<br>
+a0LF: (decimal) candidate area minimum asymptote for LF images (default: 9) <br>
+<br>
+c0: (decimal) candidate contrast minimum asymptote (default: 0.015) <br>
+<br>
+w: (decimal) determines steepness of Rose model contours with higher values being more gradual slope (default: 2.1) <br>
+<br>
+k0: (decimal) determines steepness of Rose model curve with higher values being more gradual slope (default: 2) <br>
+<br>
+areaMax: (integer) candidate area maximum to use Rose model. Areas above are automatically major (default: none) <br>
+<br>
+contrastMax: (integer) candidate contrast maximum to use Rose model. Contrasts above are automatically major (default: none) <br>
+<br>
 
 >**Response** <br>
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
 ```json
 {
-  "edge": 0,
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
+  "subcell": {
+    "width": 101,
+    "shift": 33
+  },
   "max": 159,
   "preprocess": {
     "filter": "gaussian",
-    "parameter": 1
-  },
-  "subcell": {
-    "shift": 33,
-    "width": 101
+    "parameter": 1,
+    "edge": 3,
+    "SFedge": 1290
   },
   "thresholds": {
-    "anomaly": 254,
-    "contrast": 0.02,
-    "distance": 256,
     "variation": 0.07,
-    "zvalue": 7.6
+    "major": 0.95,
+    "minor": 0.5,
+    "anomaly": 254,
+    "distance": 256,
+    "areaMax": 60,
+    "contrastMax": 0.3
+  },
+  "roseConstants": {
+    "a0SF": 11,
+    "a0LF": 9,
+    "c0": 0.015,
+    "w": 2.1,
+    "k0": 2
   }
 }
 ```
@@ -220,20 +250,18 @@ JSON block containing a complete list of the parameters including both the set v
 ```curl
 curl -X POST \
      --url http://localhost:8080/avis-dicom/v1/configuration/{identifier} \
-           ?subcell=101 \
-           &edge=10 \
-           &contrast=0.02 \
-           &filtertype=gaussian \
-           &parameter=1 \
+           ?kernelSize=101 \
+           &edgeCrop=10 \
+           &c0=0.02 \
+           &filterType=gaussian \
+           &filterParam=1 \
      --Header "x-token: test"
 ```
 
 >**Error conditions** <br>
 400 - given identifier is not a connected test bench <br>
 &emsp;&emsp;- invalid parameter name specified <br>
-&emsp;&emsp;- subcell parameter is too big for image <br>
-&emsp;&emsp;- edge parameter is too big for image <br>
-&emsp;&emsp;- filtertype is not one of: "gaussian", "median", or "none"
+&emsp;&emsp;- filter is not one of: "gaussian", "median", or "none"
 
 
 
@@ -252,23 +280,33 @@ identifier: (string) label for the test bench
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
 ```json
 {
-  "edge": 0,
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
+  "subcell": {
+    "width": 101,
+    "shift": 33
+  },
   "max": 159,
   "preprocess": {
     "filter": "gaussian",
-    "parameter": 1
-  },
-  "subcell": {
-    "shift": 33,
-    "width": 101
+    "parameter": 1,
+    "edge": 3,
+    "SFedge": 1290
   },
   "thresholds": {
-    "anomaly": 254,
-    "contrast": 0.02,
-    "distance": 256,
     "variation": 0.07,
-    "zvalue": 7.6
+    "major": 0.95,
+    "minor": 0.5,
+    "anomaly": 254,
+    "distance": 256,
+    "areaMax": 60,
+    "contrastMax": 0.3
+  },
+  "roseConstants": {
+    "a0SF": 11,
+    "a0LF": 9,
+    "c0": 0.015,
+    "w": 2.1,
+    "k0": 2
   }
 }
 ```
@@ -318,6 +356,8 @@ curl -X POST \
 
 >**Error conditions** <br>
 400 - given identifier is not a connected test bench <br>
+&emsp;&emsp;- subcell parameter is too big for image <br>
+&emsp;&emsp;- edge parameter is too big for image <br>
 
 
 ## GET /results
@@ -335,17 +375,51 @@ identifier: (string) label for the test bench
 JSON block containing the list of coordinates for the major defects as well as the number of minor and major defects found
 ```json
 {
+  "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
+  "major": 1,
+  "minor": 3,
   "coordinates": {
     "major": [
       [
-        120,
-        64
+        0,
+        0
+      ]
+    ],
+    "minor": [
+      [
+        10,
+        10
+      ],
+      [
+        200,
+        1
+      ],
+      [
+        3,
+        725
       ]
     ]
   },
-  "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
-  "major": 1,
-  "minor": 3
+  "contrasts": {
+    "major": [
+      0.025
+    ],
+    "minor": [
+      0.019,
+      0.013,
+      0.01
+    ]
+  },
+  "areas": {
+    "major": [
+      45
+    ],
+    "minor": [
+      3,
+      2,
+      7
+    ]
+  }
 }
 ```
 
