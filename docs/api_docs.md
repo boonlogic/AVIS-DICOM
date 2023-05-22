@@ -31,13 +31,13 @@ None
 >JSON block of the software components and their corresponding version numbers
 ```json
 {
-  "avis-dicom-api": "859e9c0e",
-  "avis-dicom-common": "2c55061c",
-  "builder": "16fa3cdd",
-  "expert-common": "da93f9de",
-  "nano-py-bindings": "f152a53c",
-  "nano-secure": "b9e862ca",
-  "release": "prod"
+  "avis-dicom-api": "8f7e7b89",
+  "avis-dicom-common": "80928067",
+  "builder": "5b6ee068",
+  "expert-common": "fdcf08e5",
+  "nano-py-bindings": "ac00aa9e",
+  "nano-secure": "7930648e",
+  "release": "v2.4.2"
 }
 ```
 
