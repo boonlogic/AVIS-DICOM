@@ -69,6 +69,7 @@ REST interface for accessing the server and its processed results.
 * expert-common
 * nano-py-bindings
 * nano-secure
+* nano-sgx
 
 | Test Bench | |
 | :--- | :--- |
@@ -77,7 +78,7 @@ REST interface for accessing the server and its processed results.
 | **Status** | Status in pipeline of individual test bench <br/> **OR** <br/> List of all test benches' statuses in their respective pipelines |
 
 
-| Parameters |  |
+| Configuration |  |
 | :--- | :--- |
 | **Define** | Set values and forego autotuning for any set values |
 | **Returned** | Complete list of parameters used in processing of the image (including auto-set values)
@@ -89,12 +90,22 @@ REST interface for accessing the server and its processed results.
 ###### filter (configurable) - filter to preprocess the whole image. Options are median, gaussian, or none
 ###### parameter (configurable) - parameter associated with the filter. If the filter is median, this value corresponds to the window width, if the filter is gaussian, then this corresponds to the sigma value
 ##### edge (configurable) - number of pixels to trim around the edge of the image
+##### SFEdge (configurable) - number of pixels wide to trim the SF images
 ##### thresholds
-###### contrast (configurable) - defect contrast threshold for determining whether the candidate is minor or major
+###### contrastMax (configurable) - maximum contrast to apply Rose Model before automatically labelling candidate as major
+###### areaMax (configurable) - maximum area to apply Rose Model before automatically labelling candidate as major
+###### major (configurable) - Rose model threshold for major candidates
+###### minor (configurable) - Rose model threshold for minor candidates
 ###### variation (set) - the distance measurement to distinguish variation between subimages (Boon value)
 ###### distance (set) - distance index between subimages' clusters (Boon value)
-###### local z value (set) - statistical normality value measuring the variation of pixel values within the subimage (Boon value)
-##### histogram maximum (set) - value for cropping histogram of magnitude values for each subimage
+###### anomaly (set) - frequency index for subimages' clusters (Boon value)
+##### max (set) - value for cropping histogram of magnitude values for each subimage
+##### roseConstants
+###### a0SF (configurable) - minimum area asymptote for Rose Model curve for SF images
+###### a0LF (configurable) - minimum area asymptote for Rose Model curve for LF images
+###### c0 (configurable) - minimum contrast asymptote for Rose Model curve
+###### w (configurable) - scalar for Rose model curve to adjust contour spacing (high values spread out contours)
+###### k0 (configurable) - scalar for Rose Model curve to adjust contour edge slope (high values make the curve more gradual)
 
 | Image |  |
 | :--- | :--- |
@@ -110,6 +121,13 @@ REST interface for accessing the server and its processed results.
 ##### minor - number of minor candidates found
 ##### coordinates
 ###### major - list of coordinates where each major defect candidate was located on the original image
+###### minor - list of coordinates where each minor defect candidate was located on the original image
+##### contrasts
+###### major - list of contrast values for each major defect candidate
+###### minor - list of contrast values for each minor defect candidate
+##### areas
+###### major - list of defect areas for each major defect candidate
+###### minor - list of defect areas for each minor defect candidate
 
 | Summary |  |
 | :--- | :--- |
@@ -163,25 +181,35 @@ Process for classifying the candidates as major or minor defects.
 <br/>
 <br/>
 
-### Major candidates - values fall above ALL thresholds
-### Minor candidates - values fall above SOME thresholds
+### Major candidates - above Rose model major threshold
+### Minor candidates - above Rose model minor threshold
 
 ### Factors
-#### Contrast
-1. Fits each candidate subimage to a plane  
-2. Find the difference between the min pixel value and the expected plane value (as well as the difference between the max and the plane)
-3. Difference value divided by the expected plane value gives the contrast measurement
-4. Contrast value is compared to the threshold value (defaulted to 0.02)
-
 #### Distance
 1. Cluster distance from other clusters created throughout the image
 2. 95th percentile of all distance indexes within the image is the threshold
-3. Compare candidate distance index against threshold
+3. Candidates above the threshold are selected
 
-#### Local Z value
-1. Finds the overall mean and standard deviation of the image's pixel values.
-2. Find the candidates' z value for the min (and max) local pixel value
-3. Compare z values against the average z value throughout the whole image
+#### Frequency
+1. Cluster frequency compared to other clusters created throughout the image
+2. 95th percentile of all frequency indexes within the image is the threshold
+3. Candidates above the threshold are selected
+
+#### Contrast
+1. Select candidate subimage pixel values between the 10th and 90th percentile for the subimage
+1. Fits each candidate subimage to a plane using the selected pixels from previous step  
+2. Find the difference between the min pixel value and the expected plane value (as well as the difference between the max and the plane)
+3. Difference value divided by the expected plane value gives the contrast measurement
+4. Contrast value is compared to the threshold value
+
+#### Area
+1. Select candidate subimage pixel values between the 10th and 90th percentile for the subimage
+1. Finds the mean and standard deviation for the pixels selected in previous step
+2. Threshold is four times the standard deviation added to the mean
+2. Count pixels in subimage that are above the threshold or below the negative threshold
+
+#### Rose Model
+1. Using a Rose Model inspired function, calculate Rose Model value for comparison against the major and minor thresholds [(see reference)](#../files/Rose_model-burgess_josaa_1999.pdf)
 
 # Deliverables
 

@@ -122,13 +122,14 @@ curl -X GET http://10.0.1.41:8080/avis-dicom/v1/version
 Returns:
 ```json
 {
-  "avis-dicom-api": "50327a8e",
-  "avis-dicom-common": "45f75b02",
-  "builder": "16fa3cdd",
-  "expert-common": "d1784d4a",
-  "nano-py-bindings": "f152a53c",
-  "nano-secure": "05d30f8f",
-  "release": "dev"
+    "avis-dicom-api": "23464844",
+    "avis-dicom-common": "5e8dc6ab",
+    "builder": "365b8f9b",
+    "expert-common": "623013a5",
+    "nano-py-bindings": "737051d3",
+    "nano-secure": "01db820e",
+    "nano-sgx": "e7172595",
+    "release": "v2.4.1"
 }
 ```
 ### Step 3: Connect Test Bench
@@ -165,23 +166,28 @@ Returns:
 ### Step 5: Configure Parameters
 See the [parameters explanation section](./system_architecture.md#subcell) for more information
 ```curl
-curl -X POST http://10.0.1.41:8080/avis-dicom/v1/testBench/test123 \
-    ?subcell=101 \
-    &edge=10 \
-    &filtertype=gaussian \
-    &parameter=1 \
-    &contrast=0.02
+curl -X POST http://10.0.1.41:8080/avis-dicom/v1/configuration/test123 \
+    ?kernelSize=101 \
+    &edgeCrop=10 \
+    &filterType=gaussian \
+    &filterParam=1 \
+    &c0=0.02
   -H "x-token: test"
 ```
 Returns:
 ```json
 {
-  "edge": 10,
-  "image": "BAD_FilterRhAg_SF",
-  "max": 159,
+  "image": "",
+  "max": 4,
   "preprocess": {
-    "filter": "gaussian",
-    "parameter": 1
+    "filter": "none"
+  },
+  "roseConstants": {
+    "a0LF": 9,
+    "a0SF": 11,
+    "c0": 0.015,
+    "k0": 2.0,
+    "w": 2.1
   },
   "subcell": {
     "shift": 33,
@@ -189,10 +195,10 @@ Returns:
   },
   "thresholds": {
     "anomaly": 0,
-    "contrast": 0.02,
     "distance": 0,
-    "variation": 0,
-    "zvalue": 0
+    "major": 0.9,
+    "minor": 0.5,
+    "variation": 0.0
   }
 }
 ```
@@ -236,23 +242,28 @@ curl -X GET http://10.0.1.41:8080/avis-dicom/v1/configuration/test123 \
 Returns:
 ```json
 {
-  "edge": 10,
   "image": "BAD_FilterRhAg_SF",
-  "max": 159,
+  "max": 4,
   "preprocess": {
-    "filter": "gaussian",
-    "parameter": 1
+    "filter": "none"
+  },
+  "roseConstants": {
+    "a0LF": 9,
+    "a0SF": 11,
+    "c0": 0.015,
+    "k0": 2.0,
+    "w": 2.1
   },
   "subcell": {
     "shift": 33,
     "width": 101
   },
   "thresholds": {
-    "anomaly": 233,
-    "contrast": 0.02,
-    "distance": 345,
-    "variation": 0.075,
-    "zvalue": 7.791754716981132
+    "anomaly": 626,
+    "distance": 475,
+    "major": 0.9,
+    "minor": 0.5,
+    "variation": 0.036
   }
 }
 ```
@@ -265,8 +276,18 @@ curl -X GET http://10.0.1.41:8080/avis-dicom/v1/results/test123 \
 Returns:
 ```json
 {
+  "areas": {
+  	"major": [
+      17
+    ]
+  },
+  "contrasts": {
+  	"major": [
+      0.019
+    ]
+  },
   "coordinates": {
-    "major": [
+  	"major": [
       [
         1943,
         1930

@@ -31,13 +31,13 @@ None
 >JSON block of the software components and their corresponding version numbers
 ```json
 {
-  "avis-dicom-api": "859e9c0e",
-  "avis-dicom-common": "2c55061c",
-  "builder": "16fa3cdd",
-  "expert-common": "da93f9de",
-  "nano-py-bindings": "f152a53c",
-  "nano-secure": "b9e862ca",
-  "release": "prod"
+  "avis-dicom-api": "8f7e7b89",
+  "avis-dicom-common": "80928067",
+  "builder": "5b6ee068",
+  "expert-common": "fdcf08e5",
+  "nano-py-bindings": "ac00aa9e",
+  "nano-secure": "7930648e",
+  "release": "v2.4.2"
 }
 ```
 
@@ -208,11 +208,12 @@ k0: (decimal) determines steepness of Rose model curve with higher values being 
 <br>
 areaMax: (integer) candidate area maximum to use Rose model. Areas above are automatically major (default: none) <br>
 <br>
-contrastMax: (float) candidate contrast maximum to use Rose model. Contrasts above are automatically major (default: none) <br>
+contrastMax: (decimal) candidate contrast maximum to use Rose model. Contrasts above are automatically major (default: none) <br>
 <br>
 
 >**Response** <br>
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
@@ -278,6 +279,7 @@ identifier: (string) label for the test bench
 
 >**Response** <br>
 JSON block containing a complete list of the parameters including both the set values and the ones autotuned in the pipeline.
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
@@ -336,6 +338,7 @@ upfile: (data) image to process
 
 >**Response** <br>
 JSON block containing the return code and a brief message about the success of the call
+
 ```json
 {
   "code": 200,
@@ -373,6 +376,7 @@ identifier: (string) label for the test bench
 
 >**Response** <br>
 JSON block containing the list of coordinates for the major defects as well as the number of minor and major defects found
+
 ```json
 {
   "image": "FilterRhAg_SF_TestFilters_1909863.DPm_9172019_54221_PM.MGDC",
