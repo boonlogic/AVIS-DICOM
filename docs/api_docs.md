@@ -208,7 +208,7 @@ k0: (decimal) determines steepness of Rose model curve with higher values being 
 <br>
 areaMax: (integer) candidate area maximum to use Rose model. Areas above are automatically major (default: none) <br>
 <br>
-contrastMax: (integer) candidate contrast maximum to use Rose model. Contrasts above are automatically major (default: none) <br>
+contrastMax: (float) candidate contrast maximum to use Rose model. Contrasts above are automatically major (default: none) <br>
 <br>
 
 >**Response** <br>
